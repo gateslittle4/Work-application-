@@ -7,8 +7,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// SQLite n'a pas de type enum natif : le statut est une String contrainte
-// côté application aux valeurs de lib/status.ts (ApplicationStatus).
+// Le statut est une String contrainte côté application aux valeurs de
+// lib/status.ts (ApplicationStatus).
 model Application {
   id          String    @id @default(cuid())
   company     String
@@ -22,4 +22,19 @@ model Application {
   notes       String?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+}
+
+// Offres trouvées automatiquement par le robot de recherche (scripts/scrape.ts).
+// status: NEW | DISMISSED | CONVERTED (voir lib/suggestion-status.ts)
+model JobListing {
+  id              String    @id @default(cuid())
+  source          String
+  sourceUrl       String    @unique
+  title           String
+  company         String?
+  location        String?
+  matchedKeywords String?
+  status          String    @default("NEW")
+  publishedAt     DateTime?
+  foundAt         DateTime  @default(now())
 }

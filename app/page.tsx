@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import ApplicationCard from "@/components/ApplicationCard";
 import ApplicationModal from "@/components/ApplicationModal";
+import NavBar from "@/components/NavBar";
 import { APPLICATION_STATUSES, STATUS_LABELS, type ApplicationStatus } from "@/lib/status";
 import type { Application, ApplicationInput } from "@/lib/types";
 
@@ -29,6 +30,9 @@ export default function Home() {
           setApplications(data);
           setLoading(false);
         }
+      })
+      .catch(() => {
+        if (!ignore) setLoading(false);
       });
     return () => {
       ignore = true;
@@ -104,6 +108,7 @@ export default function Home() {
               Trouve ton prochain poste, ailleurs que là où tu es aujourd&apos;hui.
             </p>
           </div>
+          <NavBar />
           <div className="flex items-center gap-2">
             <input
               value={search}
