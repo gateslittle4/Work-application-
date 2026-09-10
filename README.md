@@ -6,14 +6,14 @@ envoyée, entretien, offre, refusée), avec entreprise, poste, lien de
 l'offre, secteur, lieu, salaire visé et notes.
 
 Stack : [Next.js](https://nextjs.org) (App Router) + [Prisma](https://www.prisma.io)
-avec une base de données SQLite locale (aucun compte externe nécessaire).
+avec une base de données PostgreSQL (hébergée gratuitement sur Render).
 
 ### Démarrer en local
 
 ```bash
 npm install
-cp .env.example .env
-npx prisma migrate dev
+cp .env.example .env   # renseigner DATABASE_URL avec ta base Postgres
+npx prisma migrate deploy
 npm run dev
 ```
 
