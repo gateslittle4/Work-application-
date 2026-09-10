@@ -10,15 +10,7 @@ jobs:
   scrape:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-
-      - run: npm ci
-      - run: npx prisma generate
-      - run: npm run scrape
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      - name: Trigger scrape on the deployed app
+        run: |
+          curl -sf -X POST https://job-tracker-mr41.onrender.com/api/scrape \
+            -H "x-scrape-secret: ${{ secrets.SCRAPE_SECRET }}"
