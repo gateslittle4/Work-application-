@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// SQLite n'a pas de type enum natif : le statut est une String contrainte
+// côté application aux valeurs de lib/status.ts (ApplicationStatus).
+model Application {
+  id          String    @id @default(cuid())
+  company     String
+  position    String
+  url         String?
+  location    String?
+  sector      String?
+  salaryRange String?
+  status      String    @default("WISHLIST")
+  appliedDate DateTime?
+  notes       String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
